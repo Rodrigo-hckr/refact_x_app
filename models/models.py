@@ -1,6 +1,10 @@
-from flask import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
+def init_db(app):
+    with app.app_context():
+        db.create_all()
 
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,4 +33,4 @@ class RespuestaCotizacion(db.Model):
     refaccionaria_id = db.Column(db.Integer, db.ForeignKey('refaccionaria.id'), nullable=False)
     precio = db.Column(db.Float, nullable=False)
     fecha_respuesta = db.Column(db.DateTime, default=db.func.current_timestamp())    
-            
+        
